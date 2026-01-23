@@ -41,7 +41,7 @@ function App() {
         setSeriesSearch(data)
       })
 
-      fetchSeriesPopular().then(data => setMoviesPopular(data))
+      fetchSeriesPopular().then(data => setSeriesPopular(data))
     }
   }, [search])
 
@@ -54,10 +54,14 @@ function App() {
 
       <Outlet 
         context={{ 
-          movies_top_rated: movies_top_rated,
-          movies_popular: movies_popular,
           movies_search: movies_search,
           series_search: series_search,
+  
+          movies_top_rated: movies_top_rated,
+          movies_popular: movies_popular,
+
+          series_top_rated: series_top_rated,
+          series_popular: series_popular,
         }} 
       />
     </>

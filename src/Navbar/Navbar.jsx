@@ -32,9 +32,14 @@ export default function Navbar({ search, setSearch, handleSearch }) {
             >
               🍿 Movies
             </Link>
-            <button className="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg font-semibold text-sm transition duration-200 uppercase">
+
+            <Link 
+              to={`/series`}
+              style={{ textDecoration: 'none', color: 'inherit' }}
+              className="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-lg font-bold text-sm shadow-md hover:shadow-lg transform hover:scale-105 transition duration-200 uppercase"
+            >
               📺 Series
-            </button>
+            </Link>
           </div>
 
           <form onSubmit={handleSearchSubmit} className="flex gap-2 flex-shrink-0">
