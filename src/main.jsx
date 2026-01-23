@@ -4,6 +4,9 @@ import './index.css'
 import App from './App.jsx'
 import Homepage from './Homepage/Homepage'
 import Movies from './Movies/Movies'
+import Movie from './Movies/Movie'
+import Serie from './Series/Serie'
+
 import Series from './Series/Series'
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
@@ -16,6 +19,8 @@ const router = createBrowserRouter([
       { path: '', element: <Homepage /> },
       { path: 'movies', element: <Movies /> },
       { path: 'series', element: <Series /> },
+      { path: 'movies/:id', element: <Movie /> },
+      { path: 'series/:id', element: <Serie /> },
     ],
   },
 ]);

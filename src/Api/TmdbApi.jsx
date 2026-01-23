@@ -96,3 +96,35 @@ export const fetchSeriesPopular = async () => {
   const data = await response.json();
   return data.results || [];
 }
+
+export const fetchMovie = async (id) => {
+  const response = await fetch(
+    `${BASE_URL}/3/movie/${id}`,
+    {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${TMDB_TOKEN}`,
+        'accept': 'application/json'
+      }
+    }
+  )
+
+  const data = await response.json();
+  return data || {};
+}
+
+export const fetchSerie = async (id) => {
+  const response = await fetch(
+    `${BASE_URL}/3/tv/${id}`,
+    {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${TMDB_TOKEN}`,
+        'accept': 'application/json'
+      }
+    }
+  )
+
+  const data = await response.json();
+  return data || {};
+}

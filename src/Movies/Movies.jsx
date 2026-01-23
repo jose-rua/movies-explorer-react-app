@@ -8,12 +8,12 @@ export default function Movies() {
         <>
             <h1>Movies Top Rated</h1>
             <div className="flex flex-row m-4">
-                {context.movies_top_rated.map((element) => <ListItem key={element.id} image={element.poster_path} />)}
+                {context.movies_top_rated.map((element) => <ListItem key={element.id} id={element.id} image={element.poster_path} item_type="movies" />)}
             </div>
 
             <h1>Movies Popular</h1>
             <div className="flex flex-row m-4">
-                {context.movies_popular.map((element) => <ListItem key={element.id} image={element.poster_path} />)}
+                {context.movies_popular.map((element) => <ListItem key={element.id} id={element.id} image={element.poster_path} item_type="movies" />)}
             </div>
         </>
     )
