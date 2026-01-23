@@ -1,7 +1,15 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Navbar({ search, setSearch, handleSearch }) {
+  const navigate = useNavigate()
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault()
+    if (search.trim()) {
+      navigate(`/?q=${encodeURIComponent(search)}`)
+    }
+  }
   return(
     <nav className="bg-gray-900 text-white shadow-lg sticky top-0 z-50 mr-4">
       <div className="max-w-7xl mx-auto px-6 py-4">
@@ -29,7 +37,7 @@ export default function Navbar({ search, setSearch, handleSearch }) {
             </button>
           </div>
 
-          <form onSubmit={handleSearch} className="flex gap-2 flex-shrink-0">
+          <form onSubmit={handleSearchSubmit} className="flex gap-2 flex-shrink-0">
             <input 
               value={search}
               onChange={setSearch}

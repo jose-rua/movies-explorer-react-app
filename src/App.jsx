@@ -1,5 +1,5 @@
 import './App.css'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useSearchParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Navbar from './Navbar/Navbar'
 
@@ -11,7 +11,9 @@ import {
 
 
 function App() {
-  const [search, setSearch] = useState("");
+  const [searchParams] = useSearchParams()
+  const querySearch = searchParams.get('q') || ''
+  const [search, setSearch] = useState(querySearch);
 
   const [movies_search, setMoviesSearch] = useState([])
   const [series_search, setSeriesSearch] = useState([])
@@ -23,9 +25,6 @@ function App() {
   const [series_popular, setSeriesPopular] = useState([])
 
   useEffect(() => {
-    console.log("USE EFFECT")
-    console.log("");
-
     if(search) {
       fetchMoviesSearch(search).then(data => setMoviesSearch(data))
       fetchSeriesSearch(search).then(data => setSeriesSearch(data))
@@ -46,24 +45,11 @@ function App() {
     }
   }, [search])
 
-  function handleSearch(e) {
-    e.preventDefault();
-
-    if(search) {
-      fetchMoviesSearch(search).then(data => setMoviesSearch(data))
-      fetchSeriesSearch(search).then(data => setSeriesSearch(data))
-    } else {
-      fetchMoviesTopRated().then(data => setMoviesTopRated(data))
-      fetchMoviesPopular().then(data => setMoviesPopular(data))
-    }
-  }
-
   return (
     <>
       <Navbar
         search={search}
         setSearch={(e) => setSearch(e.target.value)}
-        handleSearch={(e) => handleSearch(e)}
       />
 
       <Outlet 
