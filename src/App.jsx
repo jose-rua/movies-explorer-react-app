@@ -1,33 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Outlet, useSearchParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import Navbar from './Navbar/Navbar'
+
+import { 
+  fetchMoviesSearch, fetchSeriesSearch,
+  fetchMoviesTopRated, fetchMoviesPopular,
+  fetchSeriesTopRated, fetchSeriesPopular
+} from './Api/TmdbApi'
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [searchParams] = useSearchParams()
+  const querySearch = searchParams.get('q') || ''
+  const [search, setSearch] = useState(querySearch);
+
+  const [movies_search, setMoviesSearch] = useState([])
+  const [series_search, setSeriesSearch] = useState([])
+
+  const [movies_top_rated, setMoviesTopRated] = useState([])
+  const [movies_popular, setMoviesPopular] = useState([])
+
+  const [series_top_rated, setSeriesTopRated] = useState([])
+  const [series_popular, setSeriesPopular] = useState([])
+
+  useEffect(() => {
+    if(search) {
+      fetchMoviesSearch(search).then(data => setMoviesSearch(data))
+      fetchSeriesSearch(search).then(data => setSeriesSearch(data))
+    } else {
+      fetchMoviesTopRated().then(data => {
+        setMoviesTopRated(data)
+        setMoviesSearch(data)
+      })
+
+      fetchMoviesPopular().then(data => setMoviesPopular(data))
+
+      fetchSeriesTopRated().then(data => {
+        setSeriesTopRated(data)
+        setSeriesSearch(data)
+      })
+
+      fetchSeriesPopular().then(data => setSeriesPopular(data))
+    }
+  }, [search])
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Navbar
+        search={search}
+        setSearch={(e) => setSearch(e.target.value)}
+      />
+
+      <Outlet 
+        context={{ 
+          movies_search: movies_search,
+          series_search: series_search,
+  
+          movies_top_rated: movies_top_rated,
+          movies_popular: movies_popular,
+
+          series_top_rated: series_top_rated,
+          series_popular: series_popular,
+        }} 
+      />
     </>
   )
 }
